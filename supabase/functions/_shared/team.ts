@@ -14,7 +14,7 @@ export function json(data: unknown, status = 200) {
 
 export function adminClient() {
   const url = Deno.env.get("SUPABASE_URL");
-  let key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  let key: string | null | undefined = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (!key) {
     try {
       key = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") ?? "{}").default ?? null;
@@ -27,7 +27,8 @@ export function adminClient() {
 }
 
 export function publishableKey() {
-  let key = Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
+  let key: string | null | undefined =
+    Deno.env.get("SUPABASE_ANON_KEY") ?? Deno.env.get("SUPABASE_PUBLISHABLE_KEY");
   if (!key) {
     try {
       key = JSON.parse(Deno.env.get("SUPABASE_PUBLISHABLE_KEYS") ?? "{}").default ?? null;
